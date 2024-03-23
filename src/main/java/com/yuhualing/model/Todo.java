@@ -3,9 +3,6 @@ package com.yuhualing.model;
 import java.io.Serializable;
 
 public class Todo implements Serializable {
-
-//    private static final long serialVersionUID = -23802748;
-
     private Integer id;
     private String text;
     private Integer completed;

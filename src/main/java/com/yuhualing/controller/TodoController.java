@@ -39,13 +39,13 @@ public class TodoController {
         return "Hello SpringBoot " + serverPort + configInfo.getUsername();
     }
 
-    @GetMapping("/todolist")
+    @GetMapping("/todo/list")
     public @ResponseBody Object list(@RequestParam String completed) {
         //设置 redisTemplate 对象 key 的序列化方式
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         List<Todo> todos = (List<Todo>) redisTemplate.opsForValue().get("todos");
 
-        if (null == todos) {
+//        if (null == todos) {
             TodoExample example = new TodoExample();
             if (!"".equals(completed)) {
                 example.createCriteria()
@@ -53,8 +53,8 @@ public class TodoController {
             }
             todos = todoService.selectByExample(example);
 
-            redisTemplate.opsForValue().set("todos", todos, 15, TimeUnit.SECONDS);
-        }
+            redisTemplate.opsForValue().set("todos", todos, 5, TimeUnit.SECONDS);
+//        }
 
         ResponseData rc = new ResponseData();
         rc.setCode("ok");
@@ -63,7 +63,7 @@ public class TodoController {
         return rc;
     }
 
-    @GetMapping("/tododetail/{id}")
+    @GetMapping("/todo/{id}")
     public @ResponseBody Object defail(@PathVariable("id") int id) {
         Todo todo = todoService.selectByPrimaryKey(id);
         ResponseData responseData = new ResponseData();
@@ -73,7 +73,7 @@ public class TodoController {
         return responseData;
     }
 
-    @PostMapping("/todoadd")
+    @PostMapping("/todo/add")
     public @ResponseBody Object add(@RequestBody Map<String, String> map){
         String text = map.get("text");
         Integer completed = Integer.parseInt(map.get("completed"));
@@ -87,7 +87,7 @@ public class TodoController {
         return responseData;
     }
 
-    @PostMapping("/todoupdate")
+    @PostMapping("/todo/update")
     public @ResponseBody Object update(@RequestBody Map<String, String> map) {
         Integer id = Integer.parseInt(map.get("id"));
         String text = map.get("text");
@@ -106,7 +106,7 @@ public class TodoController {
         return responseData;
     }
 
-    @PostMapping("/tododelete")
+    @PostMapping("/todo/delete")
     public @ResponseBody Object delete(@RequestBody Map<String, Integer> map) {
         Integer id = map.get("id");
         int num = todoService.deleteByPrimaryKey(id);
@@ -116,7 +116,7 @@ public class TodoController {
         return responseData;
     }
 
-    @PostMapping("/todoclear")
+    @PostMapping("/todo/clear")
     public @ResponseBody Object clear() {
         int num = todoService.deleteAll();
         ResponseData responseData = new ResponseData();

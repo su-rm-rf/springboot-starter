@@ -73,7 +73,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from todo_sb
+    from todo
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -84,30 +84,30 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from todo_sb
+    from todo
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from todo_sb
+    delete from todo
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.yuhualing.model.TodoExample">
-    delete from todo_sb
+    delete from todo
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <delete id="deleteAll">
-    DELETE from todo_sb
+    DELETE from todo
   </delete>
   <insert id="insert" parameterType="com.yuhualing.model.Todo">
-    insert into todo_sb (id, text, completed
+    insert into todo (id, text, completed
       )
     values (#{id,jdbcType=INTEGER}, #{text,jdbcType=VARCHAR}, #{completed,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.yuhualing.model.Todo">
-    insert into todo_sb
+    insert into todo
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -132,13 +132,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.yuhualing.model.TodoExample" resultType="java.lang.Long">
-    select count(*) from todo_sb
+    select count(*) from todo
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update todo_sb
+    update todo
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
@@ -155,7 +155,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update todo_sb
+    update todo
     set id = #{record.id,jdbcType=INTEGER},
       text = #{record.text,jdbcType=VARCHAR},
       completed = #{record.completed,jdbcType=INTEGER}
@@ -164,7 +164,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.yuhualing.model.Todo">
-    update todo_sb
+    update todo
     <set>
       <if test="text != null">
         text = #{text,jdbcType=VARCHAR},
@@ -176,7 +176,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.yuhualing.model.Todo">
-    update todo_sb
+    update todo
     set text = #{text,jdbcType=VARCHAR},
       completed = #{completed,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
